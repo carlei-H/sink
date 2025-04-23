@@ -14,29 +14,76 @@
             line-height: 1.5;
         }
 
+        /* Loading Bar Styles */
+        .loading-bar {
+            width: 300px;
+            height: 4px;
+            background: rgba(9, 105, 218, 0.1);
+            border-radius: 2px;
+            overflow: hidden;
+            margin: 2rem 0;
+            position: relative;
+        }
+
+        .loading-progress {
+            width: 45%;
+            height: 100%;
+            background: #0969da;
+            border-radius: 2px;
+            position: absolute;
+            animation: loading 1.5s ease-in-out infinite;
+        }
+
+        @keyframes loading {
+            0% {
+                transform: translateX(-100%);
+            }
+
+            50% {
+                transform: translateX(220%);
+            }
+
+            100% {
+                transform: translateX(220%);
+            }
+        }
+
+        /* Site List Styles (appear after loading) */
         .site-list {
             list-style: none;
             padding: 0;
             display: grid;
             gap: 1rem;
+            opacity: 0;
+            transform: translateY(10px);
+            animation: fadeIn 0.3s ease-out forwards;
         }
 
         .site-item {
             padding: 1rem;
-            border: 1px solid #ddd;
+            border: 1px solid #e1e4e8;
             border-radius: 8px;
-            transition: transform 0.2s;
+            transition: all 0.2s ease;
         }
 
         .site-item:hover {
+            border-color: #0969da;
             transform: translateY(-2px);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 3px 12px rgba(9, 105, 218, 0.1);
         }
 
         a {
             text-decoration: none;
-            color: #0969da;
+            color: #24292f;
+            display: block;
             font-weight: 500;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         h1 {
@@ -48,22 +95,19 @@
 
 <body>
     <h1>Games</h1>
-    <ul class="site-list" id="siteList">
-        <!-- Links will be inserted here by JavaScript 
-            a CSS loading spinner could be added here instead
-            to indicate that the content is being loaded
-
-            -->
-        <li></li>
-    </ul>
+    <div id="loadingContainer">
+        <div class="loading-bar">
+            <div class="loading-progress"></div>
+        </div>
+    </div>
+    <ul class="site-list" id="siteList"></ul>
 
     <script>
-        // Fetch subdirectories dynamically
         async function loadSubdirectories() {
+            const loadingContainer = document.getElementById('loadingContainer');
             const listElement = document.getElementById('siteList');
 
             try {
-                // Get list of directories
                 const response = await fetch(window.location.href, {
                     headers: { 'Accept': 'application/json' }
                 });
@@ -75,8 +119,7 @@
                     .filter(item => item.type === 'directory' && !item.name.startsWith('.'))
                     .sort((a, b) => a.name.localeCompare(b.name));
 
-                console.log('Directories:', directories);
-                // Generate HTML
+                loadingContainer.style.display = 'none';
                 listElement.innerHTML = directories.map(dir => `
                     <li class="site-item">
                         <a href="/${dir.name}/">
@@ -90,7 +133,6 @@
             }
         }
 
-        // Load directories when page loads
         loadSubdirectories();
     </script>
 </body>
