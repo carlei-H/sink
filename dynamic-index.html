@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Sites</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            line-height: 1.5;
+        }
+
+        .site-list {
+            list-style: none;
+            padding: 0;
+            display: grid;
+            gap: 1rem;
+        }
+
+        .site-item {
+            padding: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            transition: transform 0.2s;
+        }
+
+        .site-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        a {
+            text-decoration: none;
+            color: #0969da;
+            font-weight: 500;
+        }
+
+        h1 {
+            color: #24292f;
+            margin-bottom: 2rem;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Available Sites</h1>
+    <ul class="site-list" id="siteList">
+        <!-- Links will be inserted here by JavaScript -->
+        <li>Loading subdirectories...</li>
+    </ul>
+
+    <script>
+        // Fetch subdirectories dynamically
+        async function loadSubdirectories() {
+            const listElement = document.getElementById('siteList');
+
+            try {
+                // Get list of directories
+                const response = await fetch(window.location.href, {
+                    headers: { 'Accept': 'application/json' }
+                });
+
+                console.log('111')
+                if (!response.ok) throw new Error('Failed to fetch directories');
+                console.log('222', await response.text())
+
+                const data = await response.json();
+                console.log('333')
+                const directories = data
+                    .filter(item => item.type === 'directory')
+                    .sort((a, b) => a.name.localeCompare(b.name));
+
+                console.log('Directories:', directories);
+                // Generate HTML
+                listElement.innerHTML = directories.map(dir => `
+                    <li class="site-item">
+                        <a href="/${dir.name}/">
+                            ${dir.name.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase())}
+                        </a>
+                    </li>
+                `).join('');
+
+            } catch (error) {
+                listElement.innerHTML = `<li>Error loading directories: ${error.message}</li>`;
+            }
+        }
+
+        // Load directories when page loads
+        loadSubdirectories();
+    </script>
+</body>
+
+</html>
