@@ -16,7 +16,7 @@ function getDirectoryJSON(dirPath, baseUrl) {
 const params = {
     port: 3000,
     host: "0.0.0.0",
-    root: "/workspaces/your-repo-name", // Update to your Codespace path
+    root: "/workspaces/sink", // Update to your Codespace path
     open: false,
     middleware: [(req, res, next) => {
         if (req.headers.accept.includes('application/json')) {

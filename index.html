@@ -47,10 +47,14 @@
 </head>
 
 <body>
-    <h1>Available Sites</h1>
+    <h1>Games</h1>
     <ul class="site-list" id="siteList">
-        <!-- Links will be inserted here by JavaScript -->
-        <li>Loading subdirectories...</li>
+        <!-- Links will be inserted here by JavaScript 
+            a CSS loading spinner could be added here instead
+            to indicate that the content is being loaded
+
+            -->
+        <li></li>
     </ul>
 
     <script>
@@ -64,14 +68,11 @@
                     headers: { 'Accept': 'application/json' }
                 });
 
-                console.log('111')
                 if (!response.ok) throw new Error('Failed to fetch directories');
-                console.log('222', await response.text())
 
                 const data = await response.json();
-                console.log('333')
                 const directories = data
-                    .filter(item => item.type === 'directory')
+                    .filter(item => item.type === 'directory' && !item.name.startsWith('.'))
                     .sort((a, b) => a.name.localeCompare(b.name));
 
                 console.log('Directories:', directories);
