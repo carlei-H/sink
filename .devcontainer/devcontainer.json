@@ -3,10 +3,16 @@
   "image": "mcr.microsoft.com/devcontainers/javascript-node",
   "postCreateCommand": "npm install -g live-server",
   //"postStartCommand": "live-server --port=3000 --host=0.0.0.0",
-  "postStartCommand": "node .devcontainer/custom-server.js",
+  "postStartCommand": "NODE_PATH=$(npm root -g) node .devcontainer/custom-server.js",
   "forwardPorts": [
     3000
   ],
+  "otherPortsAttributes": {
+    "onAutoForward": "openBrowser",
+    "*": {
+      "visibility": "public"
+    }
+  },
   "portsAttributes": {
     "3000": {
       "label": "Static Site",
