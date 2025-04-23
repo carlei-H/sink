@@ -1,0 +1,13 @@
+{
+  "name": "Static Site Dev",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node", 
+  "postCreateCommand": "npm install -g live-server",
+  "postStartCommand": "live-server --port=3000 --host=0.0.0.0",
+  "forwardPorts": [3000],
+  "portsAttributes": {
+    "3000": {
+      "label": "Static Site",
+      "onAutoForward": "openBrowser"
+    }
+  }
+}
