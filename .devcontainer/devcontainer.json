@@ -7,18 +7,9 @@
   "forwardPorts": [
     3000
   ],
-  "otherPortsAttributes": {
-    "onAutoForward": "openBrowser",
-    "*": {
-      "visibility": "public"
-    }
-  },
   "portsAttributes": {
     "3000": {
-      "label": "Static Site",
-      "elevateIfNeeded": true,
-      "visibility": "public",
-      "onAutoForward": "openBrowser"
+      "onAutoForward": "openPreview"
     }
   }
 }
