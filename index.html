@@ -121,7 +121,8 @@
 
                 const data = await response.json();
                 const directories = data
-                    .filter(item => item.type === 'directory' && !item.name.startsWith('.'))
+                    // .filter(item => item.type === 'directory' && !item.name.startsWith('.'))
+                    .filter(item => item.type === 'dir' && !item.name.startsWith('.')) // github api use 'dir' instead of 'directory'
                     .sort((a, b) => a.name.localeCompare(b.name));
 
                 loadingContainer.style.display = 'none';
