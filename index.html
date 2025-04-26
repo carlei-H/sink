@@ -108,9 +108,14 @@
             const listElement = document.getElementById('siteList');
 
             try {
-                const response = await fetch(window.location.href, {
-                    headers: { 'Accept': 'application/json' }
-                });
+
+                // 1. work for self deployed that support directory listing
+                // const response = await fetch(window.location.href, {
+                //     headers: { 'Accept': 'application/json' }
+                // });
+                
+                // 2. work for public repo
+                const response = await fetch('https://api.github.com/repos/carlei-h/sink/contents/');
 
                 if (!response.ok) throw new Error('Failed to fetch directories');
 
