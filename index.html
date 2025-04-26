@@ -128,7 +128,7 @@
                 loadingContainer.style.display = 'none';
                 listElement.innerHTML = directories.map(dir => `
                     <li class="site-item">
-                        <a href="/${dir.name}/">
+                        <a href="/sink/${dir.name}/">
                             ${dir.name.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase())}
                         </a>
                     </li>
